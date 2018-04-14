@@ -1,0 +1,25 @@
+<% include ../headerAmp %>
+  <h1>Posts</h1>
+  <ul>
+    <% for(let i = 0; i < posts.length; i++) { %>
+    <li>
+      <a href="/posts/<%= i %>">
+        <%= posts[i].title %>
+      </a>
+      <a href="/posts/<%= i %>/edit">
+        [Edit]
+      </a>
+      <form
+        method="post"
+        action-xhr="/posts/<%= i %>"
+        target="_top">
+        <input type="submit" value="del">
+        <input type="hidden" name="_method" value="delete">
+        <%# <input type="hidden" name="_csrf" value="csrftoken"> %>
+        <input type="hidden" name="id" value="<%= i %>">
+      </form>
+    </li>
+    <% } %>
+  </ul>
+  <p><a href="/posts/new/amp">Add New</a></p>
+<% include ../footerAmp %>

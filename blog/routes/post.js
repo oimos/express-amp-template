@@ -25,24 +25,24 @@ exports.newAmp = (req, res) => {
 }
 
 exports.create = (req, res) => {
+  const index = req.originalUrl.lastIndexOf('/');
   res.setHeader('Content-type', 'application/json');
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*.ampproject.org');
   res.setHeader('AMP-Access-Control-Allow-Source-Origin', 'http://' + req.headers.host);
   res.setHeader('Access-Control-Expose-Headers', 'AMP-Access-Control-Allow-Source-Origin');
-
-  console.log('sent the name ' + req.body.title);
-  console.log('request ' + req.body.body);
-
-  res.json(req.body);
+  console.log(req.originalUrl)
+  console.log(typeof req.originalUrl)
+  if(req.originalUrl.match(/amp/g) !== null){
+    res.json(req.body);
+  }
 
   const post = {
     title: req.body.title,
     body: req.body.body
   }
   posts.push(post)
-  console.log(posts)
-  // res.redirect('/')
+  res.redirect('/')
 }
 
 exports.edit = (req, res) => {

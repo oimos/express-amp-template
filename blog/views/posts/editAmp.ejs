@@ -1,0 +1,24 @@
+<% include ../headerAmp %>
+<div class="container">
+<h1>Edit</h1>
+<form
+  method="post"
+  action-xhr="/posts/<%= post.id %>?_method=PUT"
+  target="_top">
+  <input type="text" name="title" value="<%= post.title %>">
+  <input type="text" name="body" value="<%= post.body %>">
+  <input type="hidden" name="id" value="<%= post.id %>">
+  <input type="submit" value="Update">
+  <div submit-success>
+    <template type="amp-mustache">
+      Success
+    </template>
+  </div>
+  <div submit-error>
+    <template type="amp-mustache">
+      Fail
+    </template>
+  </div>
+</form>
+</div>
+<% include ../footerAmp %>

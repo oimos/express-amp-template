@@ -1,22 +1,27 @@
 <% include ../header %>
-  <h1>Posts</h1>
-  <ul>
-    <% for(let i = 0; i < posts.length; i++) { %>
-    <li>
-      <a href="/posts/<%= i %>">
-        <%= posts[i].title %>
-      </a>
-      <a href="/posts/<%= i %>/edit">
-        [Edit]
-      </a>
-      <form action="/posts/<%= i %>" method="post">
-        <input type="submit" value="del">
-        <input type="hidden" name="_method" value="delete">
-        <input type="hidden" name="_csrf" value="csrftoken">
-        <input type="hidden" name="id" value="<%= i %>">
-      </form>
-    </li>
-    <% } %>
-  </ul>
-  <p><a href="/posts/new">Add New</a></p>
+  <div class="container">
+    <h1>Posts</h1>
+    <ul class="postList">
+      <div class="row" role="list">
+      <% for(let i = 0; i < posts.length; i++) { %>
+      <li class="column column-25">
+        <a href="/posts/<%= i %>">
+          <%= posts[i].title %>
+        </a>
+        <div class="row">
+          <a href="/posts/<%= i %>/edit" class="button column column-50">
+            [Edit]
+          </a>
+          <form action="/posts/<%= i %>?_method=DELETE" method="post" class="column column-50">
+            <input type="submit" value="del">
+            <input type="hidden" name="_csrf" value="csrftoken">
+            <input type="hidden" name="id" value="<%= i %>">
+          </form>
+        </div>
+      </li>
+      <% } %>
+      </div>
+    </ul>
+    <p><a href="/posts/new">Add New</a></p>
+  </div>
 <% include ../footer %>

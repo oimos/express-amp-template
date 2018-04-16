@@ -8,9 +8,14 @@
         height="300"
         layout="fixed-height"
         src="/showlist"
-        credentials="include"
         items="."
         >
+        <!--
+          src="/showlist?clientId=CLIENT_ID(myCookieId)"
+          credentials="include"
+          if you add ?clientId=CLIENT_ID(myCookieId)" and credentials="include"
+          the request headers starts to have cookie
+        -->
         <template type="amp-mustache">
           {{#.}}
           <li class="column-25">

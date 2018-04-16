@@ -4,6 +4,8 @@ let posts = [
   {id: 2, title: 'post title2', body: 'post body2'}
 ]
 
+let shouldShow = { showNotification: true };
+
 exports.index = (req, res) => {
   res.render('posts/index', {posts: posts});
 }
@@ -122,5 +124,40 @@ exports.update = function(req, res, next){
       }
       res.redirect('/')
     }
+  }
+}
+
+exports.ampFxFlyingCarpet = (req, res) => {
+  res.render('posts/ampFxFlyingCarpet');
+}
+
+exports.ampPositionObserver = (req, res) => {
+  res.render('posts/ampPositionObserver');
+}
+
+exports.ampUserNotification = (req, res) => {
+  res.render('posts/ampUserNotification');
+}
+
+exports.ampUserNotificationShouldShow = (req, res) => {
+  if(req.originalUrl.match(/amp/g) !== null){
+    res.setHeader('Content-type', 'application/json');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', '*.ampproject.org');
+    res.setHeader('AMP-Access-Control-Allow-Source-Origin', 'http://' + req.headers.host);
+    res.setHeader('Access-Control-Expose-Headers', 'AMP-Access-Control-Allow-Source-Origin');
+    res.json( shouldShow );
+  }
+}
+
+exports.ampUserNotificationShouldHide = (req, res) => {
+  if(req.originalUrl.match(/amp/g) !== null){
+    res.setHeader('Content-type', 'application/json');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', '*.ampproject.org');
+    res.setHeader('AMP-Access-Control-Allow-Source-Origin', 'http://' + req.headers.host);
+    res.setHeader('Access-Control-Expose-Headers', 'AMP-Access-Control-Allow-Source-Origin');
+    shouldShow.showNotification = false;
+    res.json( shouldShow );
   }
 }

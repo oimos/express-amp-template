@@ -76,13 +76,18 @@ app.get('/posts/:id([0-9]+)/amp', post.showAmp)
 app.get('/posts/new/amp', post.newAmp)
 app.get('/posts/:id/edit/amp', post.editAmp)
 
-app.get('/new/:name?', (req, res) => {
-  if(req.params.name){
-    res.render('new', {name: req.params.name})
-  } else {
-    res.send('Hello')
-  }
-})
+app.get('/amp-fx-flying-carpet', post.ampFxFlyingCarpet)
+app.get('/amp-position-observer', post.ampPositionObserver)
+app.get('/amp-user-notification', post.ampUserNotification)
+app.get('/shouldshow', multipart.fields([]), post.ampUserNotificationShouldShow)
+app.post('/shouldshow', multipart.fields([]), post.ampUserNotificationShouldHide)
+// app.get('/new/:name?', (req, res) => {
+//   if(req.params.name){
+//     res.render('new', {name: req.params.name})
+//   } else {
+//     res.send('Hello')
+//   }
+// })
 
 app.listen(port)
 console.log(`listen on port ${port}`)

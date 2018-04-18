@@ -1,3 +1,17 @@
+// https://devcenter.heroku.com/articles/ssl-certificate-self
+// openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
+// openssl rsa -passin pass:x -in server.pass.key -out server.key
+// rm server.pass.key
+// openssl req -new -key server.key -out server.csr
+// openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out server.crt
+
+const fs = require('fs')
+const http = require('http')
+const https = require('https')
+const privateKey = fs.readFileSync('./server.key', 'utf8')
+const certificate = fs.readFileSync('./server.crt', 'utf8')
+const credentials = {key: privateKey, cert: certificate}
+
 const express = require('express')
 const util = require('util');
 const bodyParser = require('body-parser')
@@ -89,5 +103,11 @@ app.post('/shouldshow', multipart.fields([]), post.ampUserNotificationShouldHide
 //   }
 // })
 
-app.listen(port)
+// app.listen(port)
+// console.log(`listen on port ${port}`)
+const httpServer = http.createServer(app)
+const httpsServer = https.createServer(credentials, app)
+
+// httpServer.listen(8080)
+httpsServer.listen(4460)
 console.log(`listen on port ${port}`)
